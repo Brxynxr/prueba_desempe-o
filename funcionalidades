@@ -1,0 +1,149 @@
+#lista principal donde se almacenaran los estudiantes
+estudiantes = []
+def registrar():
+    
+    #Validacion de id
+        id = None
+        while id is None:
+            
+            try:
+                id = int(input("ingrese id del estudiante: "))
+            except ValueError:
+                print("Error: informacion invalida")
+                return
+    
+    #Validar id dupĺicado 
+        for e in estudiantes:
+            if e["id"] == id:
+                print("el id ya existe")
+                return
+                
+        nombre = input("ingrese nombre de estudiante: ")
+   
+        #Validacion de edad
+        edad = None
+        while edad is None:
+            try:
+                edad = int(input("ingrese la edad del estudiante: "))
+            except ValueError:
+                print("Error: informacion invalida")
+                return  
+                    
+        curso = input("ingrese el programa al que pertenece el estudiante: ")
+        estado = input("el estudiante se encuenta activo o inactivo?: ")
+
+                
+        datos = {
+            "id": id,
+            "nombre": nombre,
+            "edad": edad,
+            "curso": curso,
+            "estado": estado
+        }
+        estudiantes.append(datos)
+    
+        
+def mostrar_estudiantes():
+    print("lista de estudiantes")
+    if (len(estudiantes)) == 0:
+        print ("no hay estudiantes registrados")
+        return
+    
+    for e in estudiantes:
+        print("-----------------")
+        print(f"id: {e['id']}")
+        print(f"nombre: {e['nombre']}")
+        print(f"edad: {e['edad']}")
+        print(f"programa: {e['curso']}")
+        print(f"estado: {e['estado']}")
+        
+def buscar_estudiantes():
+    print("buscar estudiantes")
+    print("1) por id")
+    print("2) por nombre")
+    print("3) por curso")
+    
+    opcion = input("ingrese una opcion: ")
+    
+    if opcion == "1":
+        clave = "id"
+        valor = input("ingrese id: ")
+    elif opcion == "2":
+        clave = "nombre"
+        valor = input("ingres nombre: ")
+    elif opcion == "3":
+        clave = "curso"
+        valor = input("ingrese curso: ")
+    else:
+        print("opcion invalida")
+        return
+
+    encontrados = []
+    for e in estudiantes:
+        print("resultado")
+        if valor.lower() in str(e[clave]).lower():
+            encontrados.append(e)
+    if len(encontrados) > 0:
+        for estu in encontrados:
+            print (f"id: {estu['id']}")
+            print(f"nombre: {estu['nombre']}")
+            print(f"edad: {estu['edad']}")
+            print(f"curso: {estu['curso']}")
+            print(f"estado: {estu['estado']}")
+    else:
+        print("no se encontraron estudiantes")
+def actualizar_estudiante():
+    print("actualizar estudiantes")
+    id_buscar = input("ingrese id: ")
+    for e in estudiantes:
+        if e["id"] == id_buscar: 
+            e["nombre"] = input("ingrese nuevo nombre: ")
+            try:
+                e["edad"] = int(input("ingrese nueva edad: "))
+            except:
+                print("edad invalida")
+                return
+            e["curso"] = input("ingrese el nuevo programa al que pertenece: ")
+            e["estado"] = input("el nuevo estado en el que se encuentra el estudiante: ")
+            
+            print("Estudiante actualizado")
+            return
+    print("estudiante no encontrado")
+def eliminar_estudiante():
+    id_buscar = input("ingrese id: ")
+    for e in estudiantes:
+        if e["id"] == id_buscar:
+            estudiantes.remove(e)
+            print("estudiante eliminado")
+            return
+    print("estudiante no encontrado")
+
+def menu():
+    salir = False
+    while not salir:
+        print("-----MENU-----")
+        print("1. Registrar estudiante ")
+        print("2. Mostrar estudiante ")
+        print("3. Buscar estudiante ")
+        print("4. Actualizar estudiante ")
+        print("5. Eliminar estudiante")
+        print("6. Salir ")
+        opcion = input("→ Select an option: ")
+        
+        if opcion == "1":
+            registrar()
+        elif opcion == "2":
+            mostrar_estudiantes()
+        elif opcion == "3":
+            buscar_estudiantes()
+        elif opcion == "4":
+            actualizar_estudiante()
+        elif opcion == "5":
+            eliminar_estudiante()
+        elif opcion == "6":
+            print("Exiting the system...")
+            salir = True
+        else:
+            print("opcion invalida")
+menu()  
+         
